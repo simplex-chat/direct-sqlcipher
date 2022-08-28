@@ -1,23 +1,20 @@
-name:               direct-sqlite
+name:               direct-sqlcipher
 version:            2.3.27
-synopsis:           Low-level binding to SQLite3.  Includes UTF8 and BLOB support.
-description:        This package is not very different from the other SQLite3 bindings out
-                    there, but it fixes a few deficiencies I was finding.  As compared to
-                    bindings-sqlite3, it is slightly higher-level, in that it supports
-                    marshalling of data values to and from the database.  In particular,
-                    it supports strings encoded as UTF8, and BLOBs represented as
-                    ByteStrings.
+synopsis:           Low-level binding to SQLCipher. Includes UTF8 and BLOB support.
+description:        This package is forked from direct-sqlite by Irene Knapp.
+                    https://github.com/IreneKnapp/direct-sqlite
 license:            BSD3
 license-file:       LICENSE
 copyright:          Copyright (c) 2012 - 2014 Irene Knapp,
                     2014 - 2018 Janne Hellsten,
                     2018 - 2020 Sergey Bushnyak,
                     2022        Joshua Chia
+                    2022        Evgeny Poberezkin
 author:             Irene Knapp <irene.knapp@icloud.com>
-maintainer:         Joshua Chia <joshchia@gmail.com>
+maintainer:         Evgeny Poberezkin <ep@simplex.chat>
 category:           Database
-homepage:           https://github.com/IreneKnapp/direct-sqlite
-bug-reports:        https://github.com/IreneKnapp/direct-sqlite/issues/new
+homepage:           https://github.com/simplex-chat/direct-sqlcipher
+bug-reports:        https://github.com/simplex-chat/direct-sqlcipher/issues/new
 build-type:         Simple
 extra-source-files: cbits/sqlite3.c
                     cbits/sqlite3.h
@@ -27,7 +24,7 @@ cabal-version:      >= 1.10
 
 source-repository head
   type:     git
-  location: git://github.com/IreneKnapp/direct-sqlite.git
+  location: git://github.com/simplex-chat/direct-sqlcipher.git
 
 flag systemlib
   default:     False
@@ -94,7 +91,7 @@ test-suite test
                     , HUnit
                     , base16-bytestring
                     , bytestring
-                    , direct-sqlite
+                    , direct-sqlcipher
                     , directory
                     , temporary
                     , text
