@@ -46,6 +46,21 @@ flag json1
   default:     True
   description: Enable json1 extension.
 
+flag commoncrypto
+  description: SQLCipher: Enable encryption using Apple's commoncrypto
+  default: False
+  manual: True
+
+flag openssl
+  description: SQLCipher: Enable encryption using OpenSSL
+  default: False
+  manual: True
+
+flag tomcrypt
+  description: SQLCipher: Enable encryption using tomcrypt
+  default: False
+  manual: True
+
 library
   exposed-modules:  Database.SQLite3
                     Database.SQLite3.Bindings
@@ -65,6 +80,8 @@ library
     c-sources:        cbits/sqlite3.c
     install-includes: sqlite3.h, sqlite3ext.h
     include-dirs:     cbits
+    cc-options: -DSQLITE_TEMP_STORE=2
+                -DSQLITE_HAS_CODEC
 
     if !os(windows) && !os(android)
       extra-libraries: pthread
@@ -81,6 +98,19 @@ library
 
     if flag(json1)
       cc-options: -DSQLITE_ENABLE_JSON1
+
+    if flag(commoncrypto)
+      cc-options: -DSQLCIPHER_CRYPTO_CC
+      frameworks: Security
+                  CoreFoundation
+
+    if flag(openssl)
+      cc-options: -DSQLCIPHER_CRYPTO_OPENSSL
+      extra-libraries: crypto
+
+    if flag(tomcrypt)
+      cc-options: -DSQLCIPHER_CRYPTO_LIBTOMCRYPT
+      extra-libraries: tomcrypt
 
 test-suite test
   type:               exitcode-stdio-1.0
