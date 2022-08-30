@@ -80,8 +80,9 @@ library
     c-sources:        cbits/sqlite3.c
     install-includes: sqlite3.h, sqlite3ext.h
     include-dirs:     cbits
-    cc-options: -DSQLITE_TEMP_STORE=2
-                -DSQLITE_HAS_CODEC
+    if flag(commoncrypto) || flag(openssl) || flag(tomcrypt)
+      cc-options: -DSQLITE_TEMP_STORE=2
+                  -DSQLITE_HAS_CODEC
 
     if !os(windows) && !os(android)
       extra-libraries: pthread
