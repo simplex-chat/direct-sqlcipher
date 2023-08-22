@@ -1,5 +1,5 @@
 name:               direct-sqlcipher
-version:            2.3.27
+version:            2.3.28
 synopsis:           Low-level binding to SQLCipher. Includes UTF8 and BLOB support.
 description:        This package is forked from direct-sqlite by Irene Knapp.
                     https://github.com/IreneKnapp/direct-sqlite
@@ -61,6 +61,10 @@ flag tomcrypt
   default: False
   manual: True
 
+flag mathfunctions
+  default:     False
+  description: Enable built-in mathematical functions
+
 library
   exposed-modules:  Database.SQLite3
                     Database.SQLite3.Bindings
@@ -112,6 +116,9 @@ library
     if flag(tomcrypt)
       cc-options: -DSQLCIPHER_CRYPTO_LIBTOMCRYPT
       extra-libraries: tomcrypt
+
+    if flag(mathfunctions)
+      cc-options: -DSQLITE_ENABLE_MATH_FUNCTIONS
 
 test-suite test
   type:               exitcode-stdio-1.0
